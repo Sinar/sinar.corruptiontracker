@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="sinar.corruptiontracker">
+<body>
+
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+        <h1 class="documentFirstHeading" tal:content="context/title" />
+        
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+        <p class="documentDescription" tal:content="context/description" />
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
+        <div tal:content="structure view/w/details/render" />
+
+        <h2 tal:condition="python: view.directly_implicated()">Issues directl
+            <dl tal:repeat="obj python: view.directly_implicated()">
+                <dt><a tal:attributes="href obj/absolute_url">
+                    <span tal:replace="obj/Title" /></a>
+               </dt>
+               <dd>
+                  <span tal:replace="obj/description" />
+               </dd>
+               <dd>
+                  Financial Cost (MYR): <span tal:replace="obj/financial_cost" />
+               </dd>
+            </dl>
+
+        <h2 tal:condition="python: view.indirectly_implicated()">Issues indirectly implicated</h2>
+            <dl tal:repeat="obj python: view.indirectly_implicated()">
+                <dt><a tal:attributes="href obj/absolute_url">
+                    <span tal:replace="obj/Title" /></a>
+               </dt>
+               <dd>
+                  <span tal:replace="obj/description" />
+               </dd>
+               <dd>
+                  Financial Cost (MYR): <span tal:replace="obj/financial_cost" />
+               </dd>
+            </dl>
+
+        <h2 tal:condition="python: view.against()">Issues Against</h2>
+            <dl tal:repeat="obj python: view.against()">
+                <dt><a tal:attributes="href obj/absolute_url">
+                    <span tal:replace="obj/Title" /></a>
+               </dt>
+               <dd>
+                  <span tal:replace="obj/description" />
+               </dd>
+               <dd>
+                  Financial Cost (MYR): <span tal:replace="obj/financial_cost" />
+               </dd>
+            </dl>
+
+        <h2 tal:condition="python: view.supporting()">Issues Support</h2>
+            <dl tal:repeat="obj python: view.supporting()">
+                <dt><a tal:attributes="href obj/absolute_url">
+                    <span tal:replace="obj/Title" /></a>
+               </dt>
+               <dd>
+                  <span tal:replace="obj/description" />
+               </dd>
+               <dd>
+                  Financial Cost (MYR): <span tal:replace="obj/financial_cost" />
+               </dd>
+            </dl>
+
+
+
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+
+    </tal:main-macro>
+</metal:main>
+
+</body>
+</html>
