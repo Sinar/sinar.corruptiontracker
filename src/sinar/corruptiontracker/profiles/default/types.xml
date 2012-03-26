@@ -1,3 +1,4 @@
 <object name="portal_types">
  <object name="sinar.corruptiontracker.issue" meta_type="Dexterity FTI" />
+ <object name="sinar.corruptiontracker.person" meta_type="Dexterity FTI" />
 </object>

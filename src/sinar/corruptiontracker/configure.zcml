@@ -8,8 +8,9 @@
     <!-- Include configuration for dependencies listed in setup.py -->
     <includeDependencies package="." />
 
+    <include package="five.grok" />
+    <grok:grok package="." />
 
-    <five:registerPackage package="." initialize=".initialize" />
     <!-- -*- extra stuff goes here -*- -->
 
    <!-- Register an extension profile to make the product installable -->

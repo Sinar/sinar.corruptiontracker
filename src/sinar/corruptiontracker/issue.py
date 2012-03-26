@@ -14,55 +14,70 @@ from plone.formwidget.contenttree import ObjPathSourceBinder
 from plone.indexer import indexer
 
 from sinar.corruptiontracker import _
-
+from sinar.corruptiontracker.person import IPerson
 
 class IIssue(form.Schema):
     """A Corrruption Issue
     """
-  
-    details = RichText(
-                title=_(u"Corruption Details"),
-                required=True,
-            ) 
+
+    issue_start = schema.Date(
+                    title=_(u"Date Issue Occurred/Started"),
+                    required=False,
+                    )
+
+    issue_end = schema.Date(
+                    title=_(u"Date Issue Ended"),
+                    description=_(u"When it stopped happening, if not single occurence."),
+                    required=False,
+                    )
+
+
     financial_cost = schema.Int(
                         title=_(u"Financial Cost"),
                         description=_(u"Total financial cost of this corruption issue in RM"),
                         required=False,
                         )
+  
+    details = RichText(
+                title=_(u"Corruption Details"),
+                required=True,
+            ) 
+    persons_directly_implicated = RelationList( 
+        title =_(u"Persons directly implicated"),
+        description=_(u"Persons directly implicated ie. with name or should be charged with corruption. One per line."),
+        default=[],
+        value_type=RelationChoice(title=_(u"Related Persons"), 
+                                  source= ObjPathSourceBinder(object_provides=IPerson.__identifier__)),
+        required=False,
+        )
 
-    form.widget(persons_directly_implicated=TextLinesFieldWidget)
-    persons_directly_implicated = schema.List(
-                            title =_(u"Persons directly implicated"),
-                            description=_(u"Persons directly implicated ie. with name or should be charged with corruption. One per line."),
-                            value_type=schema.TextLine(),
-                            required=False,
-                            )
-    form.widget(persons_indirectly_implicated=TextLinesFieldWidget)
-    persons_indirectly_implicated = schema.List(
+    persons_indirectly_implicated = RelationList(
                             title =_(u"Persons indirectly implicated. "),
-                            description =_(u"eg. minister or superior who approved loan or awarded tender. One per line."),
-                            value_type = schema.TextLine(),
+                            description =_(u"eg. minister or superior who approved loan or awarded tender."),
+                            value_type=RelationChoice(title=_(u"Related Persons"), 
+                                  source= ObjPathSourceBinder(object_provides=IPerson.__identifier__)),
                             required=False
                             )
-    form.widget(persons_disclosing=TextLinesFieldWidget)
-    persons_disclosing = schema.List(
-                            title = _(u"Persons disclosing"),
-                            description = _(u"Persons who public disclosed this issue. One per line."),
-                            value_type = schema.TextLine(),
-                            required=False
-                            )
-    form.widget(persons_supporting=TextLinesFieldWidget)
-    persons_supporting= schema.List(
+
+    persons_disclosing = RelationList(
+                                title = _(u"Persons disclosing"),
+                                description = _(u"Persons who public disclosed this issue."),
+                                value_type=RelationChoice(title=_(u"Related Persons"), 
+                                  source= ObjPathSourceBinder(object_provides=IPerson.__identifier__)),
+                                required=False
+                                )
+    persons_supporting= RelationList(
                             title = _(u"Persons supporting"),
-                            description = _(u"Persons who support persons implicated such as defending their actions or defending that this is not an issue of corruption. One per line."),
-                            value_type = schema.TextLine(),
+                            description = _(u"Persons who support persons implicated such as defending their actions or defending that this is not an issue of corruption."),
+                            value_type=RelationChoice(title=_(u"Related Persons"), 
+                                  source= ObjPathSourceBinder(object_provides=IPerson.__identifier__)),
                             required=False
                             )
-    form.widget(persons_against=TextLinesFieldWidget)
-    persons_against= schema.List(
+    persons_against= RelationList(
                             title = _(u"Persons against"),
-                            description = _(u"Persons who are against this action per line."),
-                            value_type = schema.TextLine(),
+                            description = _(u"Persons who are against this action."),
+                            value_type=RelationChoice(title=_(u"Related Persons"), 
+                                  source= ObjPathSourceBinder(object_provides=IPerson.__identifier__)),
                             required=False
                             )
 
@@ -70,7 +85,7 @@ class IIssue(form.Schema):
         title=u"Related Issues",
         default=[],
         value_type=RelationChoice(title=_(u"Related"),
-                                source=ObjPathSourceBinder()),
+                                source=ObjPathSourceBinder(object_provides="sinar.corruptiontracker.issue.IIssue")),
         required=False,
         )
 
@@ -78,11 +93,4 @@ class IIssue(form.Schema):
 def searchableIndexer(obj):
     return "%s %s %s" % (obj.title, obj.description, obj.details.output)
 grok.global_adapter(searchableIndexer, name='SearchableText')
-
-@indexer(IIssue)
-def indexer_persons_directly_implicated(obj):
-    if obj.persons_directly_implicated:
-        return tuple(obj.persons_directly_implicated)
-grok.global_adapter(indexer_persons_directly_implicated, name='persons_directly_implicated')
-
 

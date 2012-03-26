@@ -29,7 +29,7 @@ class IPerson(form.Schema):
   
     details = RichText(
                 title=_(u"Details"),
-                required=True,
+                required=False,
             ) 
 
 

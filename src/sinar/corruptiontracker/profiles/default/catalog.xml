@@ -6,29 +6,4 @@
     </index>
     <column value="financial_cost" />
 
-    <index name="persons_directly_implicated" meta_type="KeywordIndex">
-        <indexed_attr value="persons_directly_implicated"/>
-    </index>
-    <column value="persons_indirectly_implicated"/>
-
-    <index name="persons_indirectly_implicated" meta_type="KeywordIndex">
-        <indexed_attr value="persons_indirectly_implicated"/>
-    </index>
-    <column value="persons_indirectly_implicated"/>
-
-    <index name="persons_disclosing" meta_type="KeywordIndex">
-        <indexed_attr value="persons_disclosing"/>
-    </index>
-    <column value="persons_disclosing"/>
-
-    <index name="persons_supporting" meta_type="KeywordIndex">
-        <indexed_attr value="persons_supporting"/>
-    </index>
-    <column value="persons_supporting"/>
-
-    <index name="persons_against" meta_type="KeywordIndex">
-        <indexed_attr value="persons_against"/>
-    </index>
-    <column value="persons_against"/>
-
 </object>
