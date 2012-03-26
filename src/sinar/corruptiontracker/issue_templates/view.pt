@@ -73,7 +73,16 @@
             </div>
         </div>
 
-        <hr />
+        <div class="field">
+            <label tal:content="structure view/w/persons_disclosing/label" />
+            <div tal:repeat="person context/persons_disclosing">
+                <a tal:attributes="href person/to_object/absolute_url">
+                <span tal:replace="person/to_object/Title" />
+                </a>
+            </div>
+        </div>
+
+
 
         <div class="field">
             <label tal:content="structure view/w/related_issues/label" />

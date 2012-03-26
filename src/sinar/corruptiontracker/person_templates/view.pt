@@ -90,6 +90,23 @@
             </dl>
         </div>
 
+       <div tal:condition="python: view.disclosing()">
+        <label tal:condition="python: view.disclosing()">Disclosed the
+            following Issues</label>
+        <p>Issues for which this person has publicly disclosed details.</p>
+            <dl tal:repeat="obj python: view.supporting()">
+                <dt><a tal:attributes="href obj/absolute_url">
+                    <span tal:replace="obj/Title" /></a>
+               </dt>
+               <dd>
+                  <span tal:replace="obj/description" />
+               </dd>
+               <dd>
+                  Financial Cost (MYR): <span tal:replace="obj/financial_cost" />
+               </dd>
+            </dl>
+        </div>
+
 
 
         <div tal:replace="structure provider:plone.belowcontentbody" />
