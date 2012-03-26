@@ -94,7 +94,7 @@
         <label tal:condition="python: view.disclosing()">Disclosed the
             following Issues</label>
         <p>Issues for which this person has publicly disclosed details.</p>
-            <dl tal:repeat="obj python: view.supporting()">
+            <dl tal:repeat="obj python: view.disclosing()">
                 <dt><a tal:attributes="href obj/absolute_url">
                     <span tal:replace="obj/Title" /></a>
                </dt>
