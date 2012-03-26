@@ -45,6 +45,32 @@ class View(dexterity.DisplayForm):
         rels=catalog.findRelations({'to_id': intids.getId(context),
                           'from_attribute' : "persons_directly_implicated"},
                                      )
+
+        #Code following to resolve proper objects from backreferences is
+        #crudely cut and pasted below. Should be refactored into a
+        #simpler better written function.
+
+        ids = []
+        for i in rels:
+            ids.append(i.from_object.getId())
+        portal_catalog = self.context.portal_catalog
+        result = []
+        for i in ids:
+            items = portal_catalog({'getId': i})
+            if items:
+                result.append(items[0].getObject())
+
+        return result
+
+    def indirectly_implicated(self):
+        
+        catalog = component.getUtility(ICatalog)
+        intids = component.getUtility(IIntIds)
+        rels=catalog.findRelations({'to_id': intids.getId(self.context),
+                          'from_attribute' : "persons_indirectly_implicated"},
+                                     )
+
+
         ids = []
         for i in rels:
             ids.append(i.from_object.getId())
@@ -66,23 +92,17 @@ class View(dexterity.DisplayForm):
         rels=catalog.findRelations({'to_id': intids.getId(self.context),
                           'from_attribute' : "persons_indirectly_implicated"},
                                      )
-        result = []
-        for i in rels:
-            result.append(i.from_object)
-        return result
 
-    def indirectly_implicated(self):
-        
-        #from ipdb import set_trace; set_trace()
-        
-        catalog = component.getUtility(ICatalog)
-        intids = component.getUtility(IIntIds)
-        rels=catalog.findRelations({'to_id': intids.getId(self.context),
-                          'from_attribute' : "persons_indirectly_implicated"},
-                                     )
-        result = []
+        ids = []
         for i in rels:
-            result.append(i.from_object)
+            ids.append(i.from_object.getId())
+        portal_catalog = self.context.portal_catalog
+        result = []
+        for i in ids:
+            items = portal_catalog({'getId': i})
+            if items:
+                result.append(items[0].getObject())
+
         return result
 
     def supporting(self):
@@ -94,9 +114,17 @@ class View(dexterity.DisplayForm):
         rels=catalog.findRelations({'to_id': intids.getId(self.context),
                           'from_attribute' : "persons_supporting"},
                                      )
-        result = []
+
+        ids = []
         for i in rels:
-            result.append(i.from_object)
+            ids.append(i.from_object.getId())
+        portal_catalog = self.context.portal_catalog
+        result = []
+        for i in ids:
+            items = portal_catalog({'getId': i})
+            if items:
+                result.append(items[0].getObject())
+
         return result
 
     def against(self):
@@ -108,10 +136,19 @@ class View(dexterity.DisplayForm):
         rels=catalog.findRelations({'to_id': intids.getId(self.context),
                           'from_attribute' : "persons_against"},
                                      )
-        result = []
+        ids = []
         for i in rels:
-            result.append(i.from_object)
+            ids.append(i.from_object.getId())
+        portal_catalog = self.context.portal_catalog
+        result = []
+        for i in ids:
+            items = portal_catalog({'getId': i})
+            if items:
+                result.append(items[0].getObject())
+
         return result
+
+
 
     def disclosing(self):
         
@@ -122,10 +159,19 @@ class View(dexterity.DisplayForm):
         rels=catalog.findRelations({'to_id': intids.getId(self.context),
                           'from_attribute' : "persons_disclosing"},
                                      )
-        result = []
+        ids = []
         for i in rels:
-            result.append(i.from_object)
+            ids.append(i.from_object.getId())
+        portal_catalog = self.context.portal_catalog
+        result = []
+        for i in ids:
+            items = portal_catalog({'getId': i})
+            if items:
+                result.append(items[0].getObject())
+
         return result
+
+
 
 
 @indexer(IPerson)

@@ -22,10 +22,9 @@
 
         <div tal:content="structure view/w/details/render" />
 
-
        <div tal:condition="python: view.directly_implicated()">
         <h2 tal:condition="python: view.directly_implicated()">Issues
-            directly Implicated</h2>
+            Directly Implicated</h2>
 
             <dl tal:repeat="obj python: view.directly_implicated()">
                 <dt><a tal:attributes="href obj/absolute_url">
@@ -61,7 +60,7 @@
 
        <div tal:condition="python: view.against()">
         <h2 tal:condition="python: view.against()">Issues Against</h2>
-        <p>Issues for which this person has stated publicly or 
+        <p>Issues for which this person has stated publicly against.</p>
             <dl tal:repeat="obj python: view.against()">
                 <dt><a tal:attributes="href obj/absolute_url">
                     <span tal:replace="obj/Title" /></a>
@@ -77,6 +76,7 @@
 
        <div tal:condition="python: view.supporting()">
         <h2 tal:condition="python: view.supporting()">Issues Support</h2>
+        <p>Issues for which this person has publicly support.</p>
             <dl tal:repeat="obj python: view.supporting()">
                 <dt><a tal:attributes="href obj/absolute_url">
                     <span tal:replace="obj/Title" /></a>
