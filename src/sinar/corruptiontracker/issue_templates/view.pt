@@ -1,0 +1,93 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="sinar.corruptiontracker">
+<body>
+
+<metal:main fill-slot="main">
+    <tal:main-macro metal:define-macro="main">
+
+        <div tal:replace="structure provider:plone.abovecontenttitle" />
+
+        <h1 class="documentFirstHeading" tal:content="context/title" />
+        
+        <div tal:replace="structure provider:plone.belowcontenttitle" />
+
+        <p class="documentDescription" tal:content="context/description" />
+
+        <div tal:replace="structure provider:plone.abovecontentbody" />
+
+
+
+        <label tal:content="structure view/w/issue_start/label" />
+        <div tal:content="structure view/w/issue_start/render" />
+
+        <label tal:content="structure view/w/issue_end/label" />
+        <div tal:content="structure view/w/issue_end/render" />
+
+        <label tal:content="structure view/w/financial_cost/label" />
+        <div tal:content="structure view/w/financial_cost/render" />
+
+ 
+        <div class="field">
+            <label tal:content="structure view/w/details/label" />
+            <div tal:content="structure view/w/details/render" />
+        </div>
+        
+        <div class="field">
+            <label tal:content="structure view/w/persons_directly_implicated/label" />
+            <div tal:repeat="person context/persons_directly_implicated">
+                <a tal:attributes="href person/to_object/absolute_url">
+                <span tal:replace="person/to_object/Title" />
+                </a>
+            </div>
+        </div>
+
+        <div class="field">
+            <label tal:content="structure view/w/persons_indirectly_implicated/label" />
+            <div tal:repeat="person context/persons_indirectly_implicated">
+                <a tal:attributes="href person/to_object/absolute_url">
+                <span tal:replace="person/to_object/Title" />
+                </a>
+            </div>
+        </div>
+
+        <div class="field">
+            <label tal:content="structure view/w/persons_supporting/label" />
+            <div tal:repeat="person context/persons_supporting">
+                <a tal:attributes="href person/to_object/absolute_url">
+                <span tal:replace="person/to_object/Title" />
+                </a>
+            </div>
+        </div>
+        <hr />
+        <div class="field">
+            <label tal:content="structure view/w/persons_against/label" />
+            <div tal:repeat="person context/persons_against">
+                <a tal:attributes="href person/to_object/absolute_url">
+                <span tal:replace="person/to_object/Title" />
+                </a>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="field">
+            <label tal:content="structure view/w/related_issues/label" />
+            <div tal:repeat="person context/related_issues">
+                <a tal:attributes="href person/to_object/absolute_url">
+                <span tal:replace="person/to_object/Title" />
+                </a>
+            </div>
+        </div>
+
+        <div tal:replace="structure provider:plone.belowcontentbody" />
+
+    </tal:main-macro>
+</metal:main>
+
+</body>
+</html>
