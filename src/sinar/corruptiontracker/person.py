@@ -39,16 +39,22 @@ class View(dexterity.DisplayForm):
 
     def directly_implicated(self):
         
-        #from ipdb import set_trace; set_trace()
-        
         catalog = component.getUtility(ICatalog)
         intids = component.getUtility(IIntIds)
-        rels=catalog.findRelations({'to_id': intids.getId(self.context),
+        context = aq_inner(self.context)
+        rels=catalog.findRelations({'to_id': intids.getId(context),
                           'from_attribute' : "persons_directly_implicated"},
                                      )
-        result = []
+        ids = []
         for i in rels:
-            result.append(i.from_object)
+            ids.append(i.from_object.getId())
+        portal_catalog = self.context.portal_catalog
+        result = []
+        for i in ids:
+            items = portal_catalog({'getId': i})
+            if items:
+                result.append(items[0].getObject())
+
         return result
 
     def indirectly_implicated(self):
