@@ -89,6 +89,10 @@ class IIssue(form.Schema):
         required=False,
         )
 
+class View(dexterity.DisplayForm):
+    grok.context(IIssue),
+    grok.require('zope2.View')
+
 @indexer(IIssue)
 def searchableIndexer(obj):
     return "%s %s %s" % (obj.title, obj.description, obj.details.output)
