@@ -1,12 +1,13 @@
-fromm setuptools import setup, find_packages
+from setuptools import setup, find_packages
 import sys,os
 
 version = '0.1'
 
 setup(name='sinar.corruptiontracker',
       version=version,
-      description="Sinar Corruption Tracker Application"
-      long_description=long_description,
+      description="Sinar Corruption Tracker Application",
+      long_description="""
+      """,
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Programming Language :: Python",
@@ -26,12 +27,12 @@ setup(name='sinar.corruptiontracker',
           'setuptools',
           'Plone',
           'plone.app.dexterity',
-          'collective.autopermission'
+          'collective.autopermission',
           # -*- Extra requirements: -*-
+          'ipdb',
       ],
       entry_points="""
       [z3c.autoinclude.plugin]
       target = plone
       """,
       )
-~         
