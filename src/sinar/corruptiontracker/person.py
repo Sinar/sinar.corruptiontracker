@@ -171,6 +171,26 @@ class View(dexterity.DisplayForm):
 
         return result
 
+    def organization(self):
+        
+        #from ipdb import set_trace; set_trace()
+        
+        catalog = component.getUtility(ICatalog)
+        intids = component.getUtility(IIntIds)
+        rels=catalog.findRelations({'to_id': intids.getId(self.context),
+                          'from_attribute' : "persons_related"},
+                                     )
+        ids = []
+        for i in rels:
+            ids.append(i.from_object.getId())
+        portal_catalog = self.context.portal_catalog
+        result = []
+        for i in ids:
+            items = portal_catalog({'getId': i})
+            if items:
+                result.append(items[0].getObject())
+
+        return result
 
 
 

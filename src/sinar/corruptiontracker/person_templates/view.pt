@@ -107,6 +107,26 @@
             </dl>
         </div>
 
+       <div tal:condition="python: view.organization()">
+        <label tal:condition="python: view.organization()">Related to Organization</label>
+        <p>This person holds position or shares in the following
+        organization(s)</p>
+            <dl tal:repeat="obj python: view.organization()">
+                <dt><a tal:attributes="href obj/absolute_url">
+                    <span tal:replace="obj/Title" /></a>
+               </dt>
+               <dd>
+                  <span tal:replace="obj/description" />
+               </dd>
+            </dl>
+        </div>
+
+        <div>
+        <label>Related to a Person for the following
+            Organization</label>
+        <p class="portalMessage"><i>Being implemented. This will allow
+            us to track additional conflict of interest relationships</i></p>
+       </div>
 
 
         <div tal:replace="structure provider:plone.belowcontentbody" />

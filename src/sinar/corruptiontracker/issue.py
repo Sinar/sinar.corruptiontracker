@@ -15,6 +15,7 @@ from plone.indexer import indexer
 
 from sinar.corruptiontracker import _
 from sinar.corruptiontracker.person import IPerson
+from sinar.corruptiontracker.organization import IOrganization
 
 class IIssue(form.Schema):
     """A Corrruption Issue
@@ -80,6 +81,14 @@ class IIssue(form.Schema):
                                   source= ObjPathSourceBinder(object_provides=IPerson.__identifier__)),
                             required=False
                             )
+
+    implicated_organization = RelationList(
+        title=u"Organizations implicated",
+        default=[],
+        value_type=RelationChoice(title=_(u"Implicated Organizations"),
+            source=ObjPathSourceBinder(object_provides="sinar.corruptiontracker.organization.IOrganization")),
+        required=False,
+        )
 
     related_issues = RelationList(
         title=u"Related Issues",

@@ -28,6 +28,7 @@ setup(name='sinar.corruptiontracker',
           'Plone',
           'plone.app.dexterity',
           'collective.autopermission',
+          'collective.portlet.collectionmultiview',
           # -*- Extra requirements: -*-
           'ipdb',
       ],

@@ -63,6 +63,17 @@
                 </a>
             </div>
         </div>
+
+        <div class="field">
+            <label tal:content="structure view/w/implicated_organization/label" />
+            <div tal:repeat="org context/implicated_organization">
+                <a tal:attributes="href org/to_object/absolute_url">
+                <span tal:replace="org/to_object/Title" />
+                </a>
+            </div>
+        </div>
+
+
         <hr />
         <div class="field">
             <label tal:content="structure view/w/persons_against/label" />
