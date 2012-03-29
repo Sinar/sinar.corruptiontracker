@@ -13,7 +13,6 @@ from plone.indexer import indexer
 
 from sinar.corruptiontracker import _
 from sinar.corruptiontracker.person import IPerson
-#from sinar.corruptiontracker.issue import IIssue
 
 
 from zc.relation.interfaces import ICatalog
@@ -44,6 +43,16 @@ class IOrganization(form.Schema):
         required=False,
         )
 
+    subsidiaries = RelationList( 
+        title =_(u"Subsidiaries of this organization"),
+        description=_(u"Wholly or partially owned by this organization"),
+        default=[],
+        value_type=RelationChoice(title=_(u"Subsidiaries"), 
+                                  source= ObjPathSourceBinder(object_provides="sinar.corruptiontracker.organization.IOrganization")),
+        required=False,
+        )
+
+
 class View(dexterity.DisplayForm):
     grok.context(IOrganization),
     grok.require('zope2.View')
@@ -72,6 +81,32 @@ class View(dexterity.DisplayForm):
                 result.append(items[0].getObject())
 
         return result
+
+    def parent(self):
+        
+        catalog = component.getUtility(ICatalog)
+        intids = component.getUtility(IIntIds)
+        context = aq_inner(self.context)
+        rels=catalog.findRelations({'to_id': intids.getId(context),
+                          'from_attribute' : "subsidiaries"},
+                                     )
+
+        #Code following to resolve proper objects from backreferences is
+        #crudely cut and pasted below. Should be refactored into a
+        #simpler better written function.
+
+        ids = []
+        for i in rels:
+            ids.append(i.from_object.getId())
+        portal_catalog = self.context.portal_catalog
+        result = []
+        for i in ids:
+            items = portal_catalog({'getId': i})
+            if items:
+                result.append(items[0].getObject())
+
+        return result
+
 
 
 @indexer(IOrganization)

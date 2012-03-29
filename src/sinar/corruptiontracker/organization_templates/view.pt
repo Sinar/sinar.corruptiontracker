@@ -20,9 +20,31 @@
 
         <div tal:replace="structure provider:plone.abovecontentbody" />
 
+       <div tal:condition="python: view.parent()">
+        <label tal:condition="python: view.parent()">Parent Companies</label>
+
+            <dl tal:repeat="obj python: view.parent()">
+                <dt><a tal:attributes="href obj/absolute_url">
+                    <span tal:replace="obj/Title" /></a>
+               </dt>
+               <dd>
+                  <span tal:replace="obj/description" />
+               </dd>
+            </dl>
+        </div>
+
+        <div class="field" tal:condition="context/subsidiaries">
+            <label tal:content="structure view/w/subsidiaries/label" />
+            <div tal:repeat="org context/subsidiaries">
+                <a tal:attributes="href org/to_object/absolute_url">
+                <span tal:replace="org/to_object/Title" />
+                </a>
+            </div>
+        </div>
+
         <div tal:content="structure view/w/details/render" />
 
-        <div class="field">
+        <div class="field" tal:condition="context/persons_related">
             <label tal:content="structure view/w/persons_related/label" />
             <div tal:repeat="person context/persons_related">
                 <a tal:attributes="href person/to_object/absolute_url">
