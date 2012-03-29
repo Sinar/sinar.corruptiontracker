@@ -111,5 +111,5 @@ class View(dexterity.DisplayForm):
 
 @indexer(IOrganization)
 def searchableIndexer(obj):
-    return "%s %s %s" % (obj.title, obj.description, obj.details.output)
+    return obj.details.output
 grok.global_adapter(searchableIndexer, name='SearchableText')
