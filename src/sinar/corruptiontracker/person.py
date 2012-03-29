@@ -192,9 +192,7 @@ class View(dexterity.DisplayForm):
 
         return result
 
-
-
 @indexer(IPerson)
-def searchablePersonIndexer(obj):
-    return  obj.details.output
-grok.global_adapter(searchablePersonIndexer, name='SearchablePersonText')
+def index_details(obj):
+    return "%s %s %s" % (obj.title, obj.description, obj.details.output)
+grok.global_adapter(index_details, name='SearchableText')

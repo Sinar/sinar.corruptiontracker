@@ -103,7 +103,7 @@ class View(dexterity.DisplayForm):
     grok.require('zope2.View')
 
 @indexer(IIssue)
-def searchableIndexer(obj):
+def index_details(obj):
     return "%s %s %s" % (obj.title, obj.description, obj.details.output)
-grok.global_adapter(searchableIndexer, name='SearchableText')
+grok.global_adapter(index_details, name='SearchableText')
 
