@@ -12,6 +12,8 @@ from z3c.relationfield.schema import RelationList
 from z3c.relationfield.schema import RelationChoice
 from plone.formwidget.contenttree import ObjPathSourceBinder
 from plone.indexer import indexer
+from collective.z3cform.widgets.token_input_widget import \
+TokenInputFieldWidget
 
 from sinar.corruptiontracker import _
 from sinar.corruptiontracker.person import IPerson
